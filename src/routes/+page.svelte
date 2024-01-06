@@ -4,10 +4,19 @@
     import Markdown from "$lib/components/Markdown.svelte";
 
     export let data;
+    let selectedSection = null;
 
     onMount(async () => {
 //        await fetchSections();
+        selectedSection = '#' + data.sections[0].id;
     });
+
+    function changeSelect() {
+        console.log(selectedSection);
+        if (selectedSection) {
+            document.location.href = selectedSection;
+        }
+    }
 </script>
 
 
@@ -21,14 +30,24 @@
     <div class="page-content">
         <div class="sections">
             <aside>
-                {#each data.sections as section, index}
-                    <a href={`#${section.id}`}>{index +1}. {section.title}</a>
-                {/each}
+                <div class="large-screen-aside">
+                    {#each data.sections as section, index}
+                        <a on:click={() => selectedSection = '#' + section.id} href={`#${section.id}`}>{index +1}. {section.title}</a>
+                    {/each}
+                </div>
+                <div class="small-screen-aside">
+                    <select bind:value={selectedSection} on:change={changeSelect}>
+                        {#each data.sections as section, index}
+                            <option value={`#${section.id}`} selected={index == 0}>{index +1}. {section.title}</option>
+                        {/each}
+                    </select>
+                </div>
+
             </aside>
             <article>
                 {#each data.sections as section, index}
-
-                    <h1 id={section.id}>{index +1}. {section.title}</h1>
+                    <div class="scroll-placeholder" id={section.id}>&nbsp;</div>
+                    <h1>{index +1}. {section.title}</h1>
                     <p><Markdown toHtml={section.content} /></p>
                 {/each}
             </article>
@@ -93,10 +112,12 @@
     }
 
     .sections h1 {
+        margin-top: 0.83em;
         font-weight: 300;
     }
 
     :global(.sections h2) {
+        margin-top: 0;
         font-weight: 300;
     }
 
@@ -128,5 +149,51 @@
 
     article p {
         margin-bottom: 75px;
+    }
+
+    .small-screen-aside {
+        display: none;
+    }
+
+    .large-screen-aside {
+        display: block;
+    }
+
+    .scroll-placeholder {
+        display: block;
+        height: 5px;
+    }
+
+    @media (max-width: 650px) {
+        .sections {
+            display: block;
+            width: 100%;
+            padding-left: 10%;
+            padding-right: 10%;
+        }
+
+        .sections select {
+            width: 100%;
+        }
+
+        .small-screen-aside {
+            display: block;
+            background: #fff;
+            height: 45px;
+            line-height: 45px;
+        }
+
+        .large-screen-aside {
+            display: none;
+        }
+
+        .scroll-placeholder {
+            display: block;
+            height: 50px;
+        }
+
+        .sections h1 {
+            margin-top: 0;
+        }
     }
 </style>

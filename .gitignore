@@ -2,3 +2,5 @@
 .DS_Store
 build
 node_modules
+.iml
+.svelte-kit

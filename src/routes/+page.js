@@ -4,7 +4,7 @@ export function load({ params }) {
             {"id": "status", "title": "Status", "content": `
 This page represents version 0.1 of the Simple JSON API specification. Until version 1.0, anything can change. There will be no breaking changes between point releases. Each major release (2.x, 3.x, etc) may introduce breaking changes.
 
-If you see an error, would like to write an implementation, or contribute in other means, please let us know via the GitHub repository.
+If you see an error, would like to write an implementation, or contribute in other means, please let us know via the [GitHub repository](https://github.com/joachimhs/simple-json-api-website).
            `},
             {"id": "introduction", "title": "Introduction", "content": `
 Simple JSON API attempts to provide a simplified, yet complete, API structure for your applications. It aims to be: 
